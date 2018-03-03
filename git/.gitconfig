@@ -2,10 +2,10 @@
 
     a   = add
     aa  = add -A
+    ac  = !git add -A && git commit -m               # Commit all changes
     am  = commit --amend
     br  = branch
     c   = commit -m
-    ca  = !git add -A && git commit                 # Commit all changes
     co  = checkout
     cp  = cherry-pick
     d   = diff
