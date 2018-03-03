@@ -12,8 +12,6 @@ then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-brew tap homebrew/versions
-brew tap homebrew/dupes
 brew tap Goles/battery
 
 # Make sure we’re using the latest Homebrew
@@ -29,9 +27,6 @@ apps=(
     findutils
     git
     grep --with-default-names
-    homebrew/completions/brew-cask-completion
-    homebrew/dupes/grep
-    homebrew/dupes/openssh
     imagemagick --with-webp
     python
     source-highlight
@@ -47,7 +42,7 @@ brew cleanup
 
 # Install Caskroom
 brew tap caskroom/cask
-brew install brew-cask
+
 brew tap caskroom/versions
 
 # Install packages
@@ -61,4 +56,4 @@ apps=(
 brew cask install "${apps[@]}"
 
 # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
-brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql qlimagesize webpquicklook suspicious-package
+brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv qlimagesize webpquicklook suspicious-package
