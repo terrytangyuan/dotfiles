@@ -11,6 +11,7 @@
     d   = diff
     g   = log --graph --pretty=custom               # Show custom graph
     l   = log --pretty=custom                       # Show custom log
+    p   = push
     rh  = git reset --hard
     rs  = git reset --soft
     rlc = !git reset --hard HEAD~1                  # Remove last commit
