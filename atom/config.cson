@@ -1,0 +1,28 @@
+"*":
+  core:
+    telemetryConsent: "no"
+    themes: [
+      "atom-dark-ui"
+      "one-dark-syntax"
+    ]
+  editor: {}
+  "exception-reporting":
+    userId: "7d2ac049-38e2-4178-85a7-af1b2c2dce7b"
+  "ide-python":
+    pylsPlugins:
+      pycodestyle:
+        enabled: false
+        ignore: [
+          "E121"
+          "E123"
+          "E126"
+          "E226"
+          "E24"
+          "E704"
+          "W503"
+          "E111"
+          "E114"
+        ]
+      pydocstyle: {}
+  welcome:
+    showOnStartup: false
