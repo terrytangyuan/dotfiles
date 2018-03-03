@@ -4,14 +4,15 @@
     aa  = add -A
     am  = commit --amend
     br  = branch
-    c   = commit
+    c   = commit -m
     ca  = !git add -A && git commit                 # Commit all changes
     co  = checkout
     cp  = cherry-pick
     d   = diff
-    dc  = diff --cached
     g   = log --graph --pretty=custom               # Show custom graph
     l   = log --pretty=custom                       # Show custom log
+    rh  = git reset --hard
+    rs  = git reset --soft
     rlc = !git reset --hard HEAD~1                  # Remove last commit
     st  = status
     ulc = reset --soft HEAD~1                       # Undo last commit
