@@ -16,7 +16,6 @@ kill_remote_branches () {
   # Remove remote branches
   for remote in $remote_branches_to_die
   do
-    # branches=`echo "$remote_branches" | grep "$remote/" | sed 's/\(.*\)\/\(.*\)/:\2 /g' | tr -d '\n'`
     git branch -rd "$remote"
   done
 }
