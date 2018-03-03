@@ -2,7 +2,7 @@
 
 # Atom Settings
 apm list --installed --bare > atom/packages.list
-cp $HOME/.atom/{config.cson,init.coffee,keymap.cson,snippets.cson,styles.less} atom
+cp ~/.atom/{config.cson,init.coffee,keymap.cson,snippets.cson,styles.less} atom
 
 git add -A
 git commit -m "Synced"

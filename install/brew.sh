@@ -12,8 +12,6 @@ then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-brew tap Goles/battery
-
 # Make sure we’re using the latest Homebrew
 brew update
 
@@ -29,6 +27,7 @@ apps=(
     grep --with-default-names
     imagemagick --with-webp
     python
+    python3
     source-highlight
     wget
     thefuck
@@ -39,11 +38,9 @@ brew install "${apps[@]}"
 # Remove outdated versions from the cellar
 brew cleanup
 
-
 # Install Caskroom
 brew tap caskroom/cask
 brew tap caskroom/versions
-
 
 apps=(
     iterm2
@@ -59,7 +56,6 @@ brew cask install xquartz
 brew tap homebrew/science
 brew install --with-x11 r
 brew cask install --appdir=/Applications rstudio
-
 
 # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
 brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv qlimagesize webpquicklook suspicious-package
