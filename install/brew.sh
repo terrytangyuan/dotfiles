@@ -42,10 +42,9 @@ brew cleanup
 
 # Install Caskroom
 brew tap caskroom/cask
-
 brew tap caskroom/versions
 
-# Install packages
+
 apps=(
     iterm2
     atom
@@ -54,6 +53,13 @@ apps=(
 )
 
 brew cask install "${apps[@]}"
+
+# Install R and RStudio
+brew cask install xquartz
+brew tap homebrew/science
+brew install --with-x11 r
+brew cask install --appdir=/Applications rstudio
+
 
 # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
 brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv qlimagesize webpquicklook suspicious-package

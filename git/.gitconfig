@@ -1,0 +1,5 @@
+ [user]
+	name = terrytangyuan
+	email = terrytangyuan@gmail.com
+[credential]
+	helper = osxkeychain
