@@ -60,7 +60,6 @@ apps=(
     java
     docker
     intellij-idea
-
 )
 
 brew cask install "${apps[@]}"
