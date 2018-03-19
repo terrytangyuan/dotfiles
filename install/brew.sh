@@ -31,6 +31,15 @@ apps=(
     source-highlight
     wget
     thefuck
+    jq
+    gradle
+    go
+    maven
+    sbt
+    shellcheck
+    postgresql
+    cmake
+    gcc
 )
 
 brew install "${apps[@]}"
@@ -47,6 +56,11 @@ apps=(
     atom
     google-chrome
     slack
+    pycharm-ce
+    java
+    docker
+    intellij-idea
+
 )
 
 brew cask install "${apps[@]}"
