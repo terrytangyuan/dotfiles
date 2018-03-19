@@ -26,6 +26,7 @@ apps=(
     git
     grep --with-default-names
     imagemagick --with-webp
+    ffmpeg
     python
     python3
     source-highlight
