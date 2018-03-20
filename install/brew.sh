@@ -41,6 +41,7 @@ apps=(
     postgresql
     cmake
     gcc
+    kubectl
 )
 
 brew install "${apps[@]}"
@@ -61,6 +62,7 @@ apps=(
     java
     docker
     intellij-idea
+    minikube
 )
 
 brew cask install "${apps[@]}"
