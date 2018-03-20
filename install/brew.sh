@@ -42,6 +42,7 @@ apps=(
     cmake
     gcc
     kubectl
+    node
 )
 
 brew install "${apps[@]}"
