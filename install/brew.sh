@@ -43,6 +43,8 @@ apps=(
     gcc
     kubectl
     node
+    xhyve
+    docker-machine-driver-xhyve
 )
 
 brew install "${apps[@]}"
