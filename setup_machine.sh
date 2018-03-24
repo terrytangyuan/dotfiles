@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install Softwares
-bash install/brew.sh
+bash install/all.sh
 
 # Copy Configurations and helper scripts
 cp atom/* ~/.atom/

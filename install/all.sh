@@ -47,6 +47,7 @@ apps=(
     qt
     hunspell
     poppler --with-qt --enable-xpdf-headers
+    ruby
 )
 
 brew install "${apps[@]}"
@@ -85,6 +86,10 @@ brew cask install --appdir=/Applications rstudio
 brew cask install basictex
 git clone https://github.com/TeXworks/texworks.git
 cd texworks; mkdir build; cd build; cmake ..; make; make install; cd ../..
+
+# Misc
+gem install jekyll
+npm install -g typescript
 
 # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
 brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv qlimagesize webpquicklook suspicious-package
