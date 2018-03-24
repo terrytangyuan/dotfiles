@@ -37,6 +37,7 @@ apps=(
     go
     maven
     sbt
+    gradle
     shellcheck
     postgresql
     gcc
