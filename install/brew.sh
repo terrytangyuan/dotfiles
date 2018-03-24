@@ -66,7 +66,6 @@ apps=(
     pycharm-ce
     docker
     intellij-idea
-    basictex
     minikube
 )
 
@@ -83,6 +82,7 @@ brew install --with-x11 r
 brew cask install --appdir=/Applications rstudio
 
 # Tex
+brew cask install basictex
 git clone https://github.com/TeXworks/texworks.git
 cd texworks; mkdir build; cd build; cmake ..; make; make install; cd ../..
 
