@@ -39,8 +39,12 @@ apps=(
     sbt
     shellcheck
     postgresql
-    cmake
     gcc
+    pkg-config
+    cmake
+    qt
+    hunspell
+    poppler --with-qt --enable-xpdf-headers
 )
 
 brew install "${apps[@]}"
@@ -58,18 +62,26 @@ apps=(
     google-chrome
     slack
     pycharm-ce
-    java
     docker
     intellij-idea
+    basictex
 )
 
 brew cask install "${apps[@]}"
+
+# JVM
+brew cask install java
+brew install scala
 
 # Install R and RStudio
 brew cask install xquartz
 brew tap homebrew/science
 brew install --with-x11 r
 brew cask install --appdir=/Applications rstudio
+
+# Tex
+git clone https://github.com/TeXworks/texworks.git
+cd texworks; mkdir build; cd build; cmake ..; make; make install; cd ../..
 
 # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
 brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv qlimagesize webpquicklook suspicious-package
