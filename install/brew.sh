@@ -40,6 +40,8 @@ apps=(
     shellcheck
     postgresql
     gcc
+    kubectl
+    node
     pkg-config
     cmake
     qt
@@ -65,6 +67,7 @@ apps=(
     docker
     intellij-idea
     basictex
+    minikube
 )
 
 brew cask install "${apps[@]}"
