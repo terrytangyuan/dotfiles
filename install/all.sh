@@ -43,6 +43,7 @@ apps=(
     gcc
     kubectl
     node
+    yarn
     pkg-config
     cmake
     qt
