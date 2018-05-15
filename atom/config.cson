@@ -1,5 +1,8 @@
 "*":
   core:
+    disabledPackages: [
+      "linter"
+    ]
     telemetryConsent: "no"
     themes: [
       "atom-dark-ui"

@@ -1,6 +1,15 @@
 atom-beautify@0.30.9
 atom-ide-ui@0.9.1
-atom-typescript@12.2.0
+atom-ternjs@0.18.3
+atom-typescript@12.3.8
+autocomplete-modules@1.13.0
+docblockr@0.13.7
+emmet@2.4.3
 go-plus@5.8.2
 ide-python@0.8.0
+language-babel@2.84.0
+linter@2.2.0
+linter-eslint@8.4.1
+linter-flow@5.6.1
+pigments@0.40.2
 
