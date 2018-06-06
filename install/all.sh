@@ -61,7 +61,6 @@ brew tap caskroom/cask
 brew tap caskroom/versions
 
 apps=(
-    iterm2
     atom
     google-chrome
     slack
