@@ -62,8 +62,6 @@ brew tap caskroom/versions
 
 apps=(
     atom
-    google-chrome
-    slack
     pycharm-ce
     docker
     intellij-idea
