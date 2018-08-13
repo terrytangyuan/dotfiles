@@ -49,6 +49,7 @@ apps=(
     qt
     hunspell
     poppler --with-qt --enable-xpdf-headers
+    glances
 )
 
 brew install "${apps[@]}"
