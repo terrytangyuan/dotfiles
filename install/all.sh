@@ -47,6 +47,7 @@ apps=(
     pkg-config
     cmake
     qt
+    docker
     hunspell
     poppler --with-qt --enable-xpdf-headers
     glances
