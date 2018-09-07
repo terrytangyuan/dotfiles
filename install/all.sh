@@ -65,6 +65,8 @@ apps=(
     atom
     pycharm-ce
     docker
+    docker-machine
+    virtualbox
     intellij-idea
     minikube
 )
