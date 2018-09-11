@@ -4,6 +4,7 @@
     aa  = add -A
     ac  = !git add -A && git commit -m               # Commit all changes
     am  = commit --amend
+    ak = git config --global credential.helper osxkeychain # Auto update/use the saved credential
     br  = branch
     c   = commit -m
     co  = checkout
