@@ -22,12 +22,12 @@
 
     # Automatically finds and sets upstream for the forked repo that's currently in
     au = "!f() { \
-        URL=`git config --get remote.origin.url` \
-	REPO_NAME=$(basename $(basename $URL) .git) \
-	ORG_NAME=$(basename $(dirname $URL)) \
-	UPSTREAM=$(curl -X GET https://api.github.com/repos/$ORG_NAME/$REPO_NAME | jq '.parent' | jq '.ssh_url' | tr -d '"') \
-	echo "Adding ${UPSTREAM} as the upstream ..." \
-	git remote add upstream $UPSTREAM \
+        URL=$(git config --get remote.origin.url) && \
+        REPO_NAME=$(basename $(basename $URL) .git) && \
+        ORG_NAME=$(basename $(dirname $URL)) && \
+        UPSTREAM=$(curl -X GET https://api.github.com/repos/$ORG_NAME/$REPO_NAME | jq '.parent' | jq '.ssh_url' | tr -d '\"') && \
+        echo Adding ${UPSTREAM} as the upstream ... && \
+        git remote add upstream $UPSTREAM;\
     }; f"
 
     # Credit an author on the latest commit
