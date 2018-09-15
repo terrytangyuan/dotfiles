@@ -5,7 +5,7 @@
     ac  = !git add -A && git commit -m               # Commit all changes
     ak  = git config --global credential.helper osxkeychain # Auto update/use the saved credential
     am  = commit --amend
-    au  = git remote add upstream
+    ar  = git remote add
     br  = branch
     c   = commit -m
     co  = checkout
@@ -19,6 +19,16 @@
     rlc = !git reset --hard HEAD~1                  # Remove last commit
     st  = status
     ulc = reset --soft HEAD~1                       # Undo last commit
+
+    # Automatically finds and sets upstream for the forked repo that's currently in
+    au = "!f() { \
+        URL=`git config --get remote.origin.url` \
+	REPO_NAME=$(basename $(basename $URL) .git) \
+	ORG_NAME=$(basename $(dirname $URL)) \
+	UPSTREAM=$(curl -X GET https://api.github.com/repos/$ORG_NAME/$REPO_NAME | jq '.parent' | jq '.ssh_url' | tr -d '"') \
+	echo "Adding ${UPSTREAM} as the upstream ..." \
+	git remote add upstream $UPSTREAM \
+    }; f"
 
     # Credit an author on the latest commit
     credit = "!f() { \
