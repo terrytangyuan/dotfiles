@@ -77,8 +77,9 @@
     #                     │        └─ decorations (branch, heads or tags)
     #                     └─ hash (abbreviated)
 
- [user]
+[user]
 	name = terrytangyuan
 	email = terrytangyuan@gmail.com
+
 [credential]
 	helper = osxkeychain
