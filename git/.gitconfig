@@ -25,7 +25,7 @@
         URL=$(git config --get remote.origin.url) && \
         REPO_NAME=$(basename $(basename $URL) .git) && \
         ORG_NAME=$(basename $(dirname $URL)) && \
-        UPSTREAM=$(curl -X GET https://api.github.com/repos/$ORG_NAME/$REPO_NAME | jq '.parent' | jq '.ssh_url' | tr -d '\"') && \
+        UPSTREAM=$(curl -X GET https://api.github.com/repos/$ORG_NAME/$REPO_NAME --silent | jq '.parent' | jq '.ssh_url' | tr -d '\"') && \
         echo Adding ${UPSTREAM} as the upstream ... && \
         git remote add upstream $UPSTREAM;\
     }; f"
