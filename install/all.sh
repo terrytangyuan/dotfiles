@@ -90,7 +90,7 @@ git clone https://github.com/TeXworks/texworks.git
 cd texworks; mkdir build; cd build; cmake ..; make; make install; cd ../..
 
 # Misc
-gem install jekyll
+gem install jekyll jekyll-paginate
 npm install -g typescript
 
 # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
