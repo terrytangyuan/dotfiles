@@ -1,0 +1,149 @@
+#!/bin/bash
+
+# -------------------------------------------
+# Author: ohmystack (jiangjun1990@gmail.com)
+# Date:   2016.07.12
+# Original repo: https://github.com/ohmystack/gotool
+# -------------------------------------------
+
+usage() {
+	cat <<-EOF
+		Golang Developer Tool
+		Usage:
+		  source gotool [a|activate]
+		  source gotool [d|deactivate|exit]
+	EOF
+}
+
+# Check whether this script is being sourced
+if [ "$_" = "$0" ]; then
+	SOURCED=false
+fi
+
+check_sourced() {
+	if [ "$SOURCED" = false ] ; then
+		echo '** Should run after "source" **'
+		echo 'Usage: source gotool [a|activate] [d|deactivate|exit]'
+		exit 1
+	fi
+}
+
+save_old() {
+	if [ -z "${_OLD_GOLANG_PATH}" ]; then
+		export _OLD_GOLANG_PATH=$PATH
+	fi
+	if [ -z "${_OLD_GOLANG_GOPATH}" ]; then
+		export _OLD_GOLANG_GOPATH=$GOPATH
+	fi
+	if [ -z "${_OLD_GOLANG_PS1}" ]; then
+		export _OLD_GOLANG_PS1=$PS1
+	fi
+}
+
+get_shell_name() {
+	echo $(ps -p $$ | tail -1 | awk '{print $NF}')
+}
+
+set_ps1() {
+	# Add a prefix text to PS1 with 256 color
+	# Usage: set_ps1 <text> <256-color-id>
+
+	if [ $(get_shell_name) = 'zsh' ]; then
+		export PS1="%{$FG[$2]%}$1%{$reset_color%}$PS1"
+	else
+		dye=$(echo -e "\e[38;5;${2}m")
+		stop_dye=$(echo -e "\e[0m")
+		export PS1="$dye$1$stop_dye$PS1"
+	fi
+}
+
+gotool::activate() {
+	check_sourced
+
+	local merge=false
+	while [ -n "$1" ]; do
+		case $1 in
+			'-m'|'--merge')
+				merge=true
+				;;
+			*)
+				break
+				;;
+		esac
+		shift
+	done
+
+	work_dir=$(pwd)
+	if [ -d "$work_dir/src" ]; then
+		save_old
+		if $merge ; then
+			export GOPATH=$work_dir:$GOPATH
+		else
+			export GOPATH=$work_dir
+		fi
+		export PATH=$work_dir/bin:$PATH
+		try_parse_godeps_repo=${work_dir%Godeps/_workspace}
+		try_parse_docker_vendor_repo=${work_dir%vendor}
+		# Check if it is under Godeps
+		if [ ${#work_dir} != ${#try_parse_godeps_repo} ]; then
+			set_ps1 "($(basename $try_parse_godeps_repo))" 191
+		elif [ ${#work_dir} != ${#try_parse_docker_vendor_repo} ]; then
+			set_ps1 "($(basename $try_parse_docker_vendor_repo))" 191
+		else
+			set_ps1 "($(basename $(pwd)))" 112
+		fi
+	else
+		echo "Invalid Go workspace. Cannot find 'src' directory here." >&2
+	fi
+}
+
+gotool::deactivate() {
+	check_sourced
+	if [ -n "${_OLD_GOLANG_PATH}" ]; then
+		export PATH=$_OLD_GOLANG_PATH
+		unset _OLD_GOLANG_PATH
+	fi
+	if [ -n "${_OLD_GOLANG_GOPATH}" ]; then
+		export GOPATH=$_OLD_GOLANG_GOPATH
+		unset _OLD_GOLANG_GOPATH
+	fi
+	if [ -n "${_OLD_GOLANG_PS1}" ]; then
+		export PS1=$_OLD_GOLANG_PS1
+		unset _OLD_GOLANG_PS1
+	fi
+}
+
+if [ -z $1 ]; then
+	usage
+fi
+
+while [ -n $1 ]; do
+	case $1 in
+		'a' | 'activate')
+			shift
+			gotool::activate "$@"
+			;;
+		'd' | 'deactivate' | 'exit')
+			shift
+			gotool::deactivate "$@"
+			;;
+		'-h' | '--help') usage
+			;;
+		*) break
+			;;
+	esac
+done
+
+# Clear all the functions after running
+clear_all() {
+	unset -f gotool::activate
+	unset -f check_sourced
+	unset -f gotool::deactivate
+	unset -f get_shell_name
+	unset -f save_old
+	unset -f set_ps1
+	unset -f usage
+}
+
+clear_all
+unset -f clear_all
