@@ -35,6 +35,8 @@ apps=(
     jq
     gradle
     go
+    dep
+    etcd
     maven
     sbt
     gradle
@@ -83,6 +85,10 @@ brew cask install xquartz
 brew tap homebrew/science
 brew install --with-x11 r
 brew cask install --appdir=/Applications rstudio
+
+# Go
+## GVM
+bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
 
 # Tex
 brew cask install basictex
