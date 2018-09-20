@@ -1,0 +1,10 @@
+:Octopress	octopress.txt	/*:Octopress*
+g:octopress_default_format	octopress.txt	/*g:octopress_default_format*
+g:octopress_rake_executable	octopress.txt	/*g:octopress_rake_executable*
+octopress	octopress.txt	/*octopress*
+octopress-autocmd	octopress.txt	/*octopress-autocmd*
+octopress-default-format	octopress.txt	/*octopress-default-format*
+octopress-intro	octopress.txt	/*octopress-intro*
+octopress-textile	octopress.txt	/*octopress-textile*
+octopress.txt	octopress.txt	/*octopress.txt*
+vim-octopress	octopress.txt	/*vim-octopress*
