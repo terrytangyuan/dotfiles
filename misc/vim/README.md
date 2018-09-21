@@ -20,21 +20,23 @@ you can link your `~/.vimrc` to any one of them as you wish :)
 
 #### Automatic installer... (DO YOU TRUST ME?)
 
-Install `pathogen.vim` first:
+1. Install `pathogen.vim` first:
 
 ```
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 ```
 
-Copy one of the following line and paste in terminal:
+2. Copy one of the following line and paste in terminal:
 
-1. via `curl`:
+* via `curl`:
 
 `sh <(curl -L https://github.com/terrytangyuan/dotfiles/raw/master/misc/vim/utils/install.sh)`
 
-2. or via `wget`:
+* or via `wget`:
 
 `sh <(wget --no-check-certificate https://github.com/terrytangyuan/dotfiles/raw/master/misc/vim/utils/install.sh -O -)`
+
+3. Copy `autoload` folder via `cp -R misc/vim/autoload ~/.vim/`.
 
 #### Manual installation
 
