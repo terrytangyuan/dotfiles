@@ -38,6 +38,17 @@ curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
 3. Copy `autoload` folder via `cp -R misc/vim/autoload ~/.vim/`.
 
+4. Clone additional repos:
+
+```
+git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
+git clone https://github.com/garbas/vim-snipmate.git ~/.vim/bundle/vim-snipmate
+git clone https://github.com/toyamarinyon/vim-swift.git ~/.vim/bundle/vim-swift
+git clone https://github.com/tomtom/tlib_vim.git ~/.vim/bundle/tlib_vim
+git clone https://github.com/MarcWeber/vim-addon-mw-utils.git ~/.vim/bundle/vim-addon-mw-utils
+git clone https://github.com/honza/vim-snippets.git ~/.vim/bundle/vim-snippets
+```
+
 #### Manual installation
 
 1. BACKUP your `.vim` directory and `.vimrc` first.(IMPORTANT!)
