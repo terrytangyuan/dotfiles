@@ -70,7 +70,7 @@ autocmd FileType mkd call matchadd('ColorColumn', '\%81v', 100)
 " Airline & Powerline settings
 let g:airline_powerline_fonts = 1
 "let g:Powerline_symbols = "fancy"
-let g:airline_theme="ohmystack"
+let g:airline_theme="terrytangyuan"
 
 " Colorscheme settings
 let g:solarized_termcolors=256
