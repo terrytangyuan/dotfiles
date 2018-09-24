@@ -47,45 +47,16 @@ hash git >/dev/null && /usr/bin/env git clone git://github.com/kaochenlong/eddie
 }
 
 # make a symbolic link
-echo ""
-echo "There're 4 kinds of vimrc:"
-echo "1. \033[0;31mvimrc:\033[0;m standard and default version vimrc."
-echo "2. \033[0;31measy-vimrc:\033[0;m same as vimrc, but add some easier key mapping for new Vimer."
-echo "3. \033[0;31mpro-vimrc:\033[0;m same as vimrc, but remove the arrow keys mapping."
-echo "4. \033[0;31mexperimental-vimrc:\033[0;m same as pro-vimrc, but just for experimental purpose."
-echo ""
-read -p "What kind of .vimrc would you like to use? [1/2/3/4] " ans
-
-case $ans in
-  1)
-    echo "using standard vimrc.."
-    ln -s $vim_folder/vimrc $vim_rc
-    ;;
-  2)
-    echo "using easy vimrc.."
-    ln -s $vim_folder/easy-vimrc $vim_rc
-    ;;
-  3)
-    echo "using pro vimrc.."
-    ln -s $vim_folder/pro-vimrc $vim_rc
-    ;;
-  4)
-    echo "using experimental vimrc.."
-    ln -s $vim_folder/experimental-vimrc $vim_rc
-    ;;
-  *)
-    echo "using standard vimrc"
-    ln -s $vim_folder/vimrc $vim_rc
-    ;;
-esac
+echo "using standard vimrc.."
+ln -s $vim_folder/vimrc $vim_rc
 
 # run updates
-cd $vim_folder
-sh ./update.sh
+# cd $vim_folder
+# sh ./update.sh
 
 echo ""
 echo "\033[0;34mNice! Seems everything is done.\033[0m"
-echo "\033[0;34mGithub Repository: https://github.com/kaochenlong/eddie-vim\033[0m"
+echo "\033[0;34mGithub Repository: https://github.com/terrytangyuan/dotfiles\033[0m"
 echo "\033[0;34mfeel free to fork it :)\033[0m"
 echo "\033[0;34m<Eddie Kao> eddie@digik.com.tw\033[0m"
 echo ""

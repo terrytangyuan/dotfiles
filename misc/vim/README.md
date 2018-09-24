@@ -37,41 +37,6 @@ git clone https://github.com/MarcWeber/vim-addon-mw-utils.git ~/.vim/bundle/vim-
 git clone https://github.com/honza/vim-snippets.git ~/.vim/bundle/vim-snippets
 ```
 
-#### Manual installation
-
-1. BACKUP your `.vim` directory and `.vimrc` first.(IMPORTANT!)
-
-2. `cd ~` to change directory to your home directory.
-
-3. copy files to your home directory:
-
-        git clone git://github.com/kaochenlong/eddie-vim.git
-
-4. cd to `eddie-vim` directory and execute the `update.sh` to get latest version modules:
-
-        cd eddie-vim
-        ./update.sh
-
-5. make a symbolic link `.vim` to `eddie-vim` that you just cloned, or just rename it to `.vim` also be fine:
-
-        ln -s eddie-vim .vim
-
-6. link the vimrc to
-
-        ln -s .vim/vimrc .vimrc
-
-7. if you're still not familiar with the movement in vim by HJKL or yanking and pasting text, I've made a easier version:
-
-        ln -s .vim/easy-vimrc .vimrc
-
-8. if you use GUI version VIM, such as MacVim or GVim, you can also link to `.gvimrc`:
-
-        ln -s eddie-vim/gvimrc .gvimrc
-
-9. if you use Powerline under Ubuntu or something which can not show the correct icons/fonts on the bottom, you can check [this link](https://github.com/scotu/ubuntu-mono-powerline), it looks pretty nice.
-
-10. you may need to install `ack` or `silver searcher` first if you use `ack.vim`.
-
 ### Update:
 
 change directory to `~/.vim` and execute `./update.sh` script, it should do all the updates automatically.
