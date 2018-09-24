@@ -1,4 +1,4 @@
-My personal Vim configurations and some plugins.
+My personal Vim configurations and some plugins, inspired by [eddie-vim](https://github.com/kaochenlong/eddie-vim).
 
 I put Vim related settings in `plugin/settings/Settings.vim`, and isolate other plugins' settings in `plugin/settings` directory.
 
@@ -6,40 +6,12 @@ I put Vim related settings in `plugin/settings/Settings.vim`, and isolate other 
 
 ### Installation and Requisites:
 
-#### Automatic installer... (DO YOU TRUST ME?)
-
-1. Install `pathogen.vim` first:
-
 ```
-curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+# Assume currently in dotfiles root directory
+rm -rf ~/.vim
+cp -R misc/vim/ ~/.vim
+mv ~/.vim/vimrc ~/.vimrc
 ```
-
-2. Copy one of the following line and paste in terminal:
-
-* via `curl`:
-
-`sh <(curl -L https://github.com/terrytangyuan/dotfiles/raw/master/misc/vim/utils/install.sh)`
-
-* or via `wget`:
-
-`sh <(wget --no-check-certificate https://github.com/terrytangyuan/dotfiles/raw/master/misc/vim/utils/install.sh -O -)`
-
-3. Copy `autoload` folder via `cp -R misc/vim/autoload ~/.vim/`.
-
-4. Clone additional repos:
-
-```
-git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
-git clone https://github.com/garbas/vim-snipmate.git ~/.vim/bundle/vim-snipmate
-git clone https://github.com/toyamarinyon/vim-swift.git ~/.vim/bundle/vim-swift
-git clone https://github.com/tomtom/tlib_vim.git ~/.vim/bundle/tlib_vim
-git clone https://github.com/MarcWeber/vim-addon-mw-utils.git ~/.vim/bundle/vim-addon-mw-utils
-git clone https://github.com/honza/vim-snippets.git ~/.vim/bundle/vim-snippets
-```
-
-### Update:
-
-change directory to `~/.vim` and execute `./update.sh` script, it should do all the updates automatically.
 
 ### Features and Key Mappings:
 
