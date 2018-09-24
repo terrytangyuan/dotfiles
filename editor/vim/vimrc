@@ -6,7 +6,7 @@
 filetype off
 
 " To disable a plugin, add it's bundle name to the following list
-let g:pathogen_disabled = ['snipmate', 'pyflakes-vim', 'taglist.vim', 'vim-powerline', 'ropevim', 'jedi-vim', 'jshint']
+let g:pathogen_disabled = ['snipmate', 'taglist.vim']
 
 call pathogen#infect()
 call pathogen#helptags()
@@ -50,9 +50,6 @@ inoremap <RIGHT> <NOP>
 
 nnoremap <silent> <F2> :NERDTreeMirrorToggle<CR>
 
-" Add external paths into ctags
-" set tags+=/usr/local/lib/python2.7/dist-packages/tags
-
 set hlsearch                          " search highlighting
 set incsearch                         " incremental search
 syntax enable
@@ -77,60 +74,6 @@ let g:solarized_termcolors=256
 "let g:solarized_termtrans=1
 "set background=light
 colorscheme zenburn-colorful
-
-" ====================
-" Python settings
-" NOTE: For TensorFlow
-au FileType python set shiftwidth=2
-au FileType python set softtabstop=2
-au FileType python setlocal textwidth=80
-
-" ====================
-" Python-mode settings
-
-" Load show documentation plugin, 0=off 1=on
-let g:pymode_doc = 1
-let g:pymode_doc_bind = 'K'
-
-" Turn off pymode-pylint
-let g:pymode_lint = 0
-" disable pep8 from checker
-let g:pymode_lint_checker = "pylint"
-" disable 80 char column
-let g:pymode_options_colorcolumn = 0
-" use folding function from py-mode
-let g:pymode_folding = 1
-" Enable automatic virtualenv detection
-let g:pymode_virtualenv = 1
-
-" Disable auto-remove unused whitespaces.
-let g:pymode_utils_whitespaces = 0
-
-" pyflakes
-"autocmd FileType python map <buffer> <c-F7> :call Flake8()<CR>
-
-" Unload run code plugin
-let g:pymode_run = 0
-
-" Key for run python code
-"let g:pymode_run_key = '<leader>r'
-
-" Load breakpoints plugin
-let g:pymode_breakpoint = 1
-
-" Key for set/unset breakpoint
-let g:pymode_breakpoint_key = '<leader>b'
-let g:pymode_breakpoint_cmd = "import ipdb;ipdb.set_trace() # Set breakpoint_by_jiang"
-
-" rope
-" disable rope in python-mode
-let g:pymode_rope = 0
-" set up ropevim installed by myself
-let g:ropevim_enable_autoimport=1
-" add the name of modules you want to autoimport
-let g:ropevim_autoimport_modules = ["os", "django"]
-let g:pymode_rope_completion = 0
-let g:pymode_rope_complete_on_dot = 0
 
 " ====================
 " Syntastic

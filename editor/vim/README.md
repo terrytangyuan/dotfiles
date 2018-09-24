@@ -4,10 +4,20 @@ I put Vim related settings in `plugin/settings/Settings.vim`, and isolate other 
 
 ## Usage
 
+Assuming currently in dotfiles root directory.
+
+### Backup Settings to This Repo
+
+```
+rm -rf editor/vim/bundle
+rm editor/vim/vimrc
+cp -R ~/.vim/bundle/ editor/vim/bundle
+cp ~/.vimrc editor/vim/vimrc
+```
+
 ### Installation and Requisites:
 
 ```
-# Assume currently in dotfiles root directory
 rm -rf ~/.vim
 cp -R editor/vim/ ~/.vim
 mv ~/.vim/vimrc ~/.vimrc
