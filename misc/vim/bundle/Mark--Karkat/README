@@ -1,0 +1,88 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=2666
+
+DESCRIPTION
+This plugin adds mappings and a :Mark command to highlight several words in
+different colors simultaneously, similar to the built-in 'hlsearch'
+highlighting of search results and the * command. For example, when you
+are browsing a big program file, you could highlight multiple identifiers in
+parallel. This will make it easier to trace the source code.
+
+This is a continuation of vimscript #1238 by Yuheng Xie, who apparently
+doesn't maintain his original version anymore and cannot be reached via the
+email address in his profile. This plugin offers the following advantages over
+the original:
+- Much faster, all colored words can now be highlighted, no more clashes with
+  syntax highlighting (due to use of matchadd()). 
+- Many bug fixes. 
+- Jumps behave like the built-in search, including wrap and error messages. 
+- Like the built-in commands, jumps take an optional [count] to quickly skip
+  over some marks. 
+
+RELATED WORKS
+- MultipleSearch (vimscript #479) can highlight in a single window and in all
+  buffers, but still relies on the :syntax highlighting method, which is
+  slower and less reliable. 
+- http://vim.wikia.com/wiki/Highlight_multiple_words offers control over the
+  color used by mapping the 1-9 keys on the numeric keypad, persistence, and
+  highlights only a single window. 
+- highlight.vim (vimscript #1599) highlights lines or patterns of interest in
+  different colors, using mappings that start with CTRL-H and work on cword. 
+- quickhl.vim (vimscript #3692) can also list the matches with colors and in
+  addition offers on-the-fly highlighting of the current word (like many IDEs
+  do). 
+
+HIGHLIGHTING
+<Leader>m		Mark the word under the cursor, similar to the star
+			command. The next free highlight group is used. 
+			If already on a mark: Clear the mark, like
+			<Leader>n. 
+{Visual}<Leader>m	Mark or unmark the visual selection. 
+
+<Leader>r		Manually input a regular expression to mark. 
+{Visual}<Leader>r	Ditto, based on the visual selection. 
+
+<Leader>n		Clear the mark under the cursor.
+			If not on a mark: Disable all marks, similar to
+			:nohlsearch. 
+
+:Mark {pattern}		Mark or unmark {pattern}. 
+:Mark			Disable all marks, similar to :nohlsearch. Marks
+			will automatically re-enable when a mark is added or
+			removed, or a search for marks is performed. 
+:MarkClear		Clear all marks. In contrast to disabling marks, the
+			actual mark information is cleared, the next mark will
+			use the first highlight group. This cannot be undone. 
+
+SEARCHING
+[count]*         [count]#
+[count]<Leader>* [count]<Leader>#
+[count]<Leader>/ [count]<Leader>?
+			Use these six keys to jump to the [count]'th next /
+			previous occurrence of a mark. 
+			You could also use Vim's / and ? to search, since the
+			mark patterns are (optionally, see configuration)
+			added to the search history, too. 
+
+            Cursor over mark                    Cursor not over mark
+ ---------------------------------------------------------------------------
+  <Leader>* Jump to the next occurrence of      Jump to the next occurrence of
+            current mark, and remember it       "last mark". 
+            as "last mark". 
+
+  <Leader>/ Jump to the next occurrence of      Same as left. 
+            ANY mark. 
+
+   *        If <Leader>* is the most recently   Do Vim's original * command. 
+            used, do a <Leader>*; otherwise
+            (<Leader>/ is the most recently
+            used), do a <Leader>/. 
+
+MARK PERSISTENCE
+The marks can be kept and restored across Vim sessions, using the viminfo
+file. For this to work, the "!" flag must be part of the 'viminfo' setting: 
+    set viminfo+=!  " Save and restore global variables. 
+:MarkLoad		Restore the marks from the previous Vim session. All
+			current marks are discarded. 
+:MarkSave		Save the currently defined marks (or clear the
+			persisted marks if no marks are currently defined) for
+			use in a future Vim session. 

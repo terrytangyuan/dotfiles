@@ -31,12 +31,22 @@ endif
 
 " hit enter to cancel searched highlight
 nnoremap <CR> :nohlsearch<CR>
-" If there is a new window opened by QuickFix, 
+" If there is a new window opened by QuickFix,
 " restore the original <CR> behavior in that buffer.
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 
 " select ALL
 map <C-A> ggVG
+
+" force myself to not to use the arrow keys
+map <UP> <NOP>
+map <DOWN> <NOP>
+map <LEFT> <NOP>
+map <RIGHT> <NOP>
+inoremap <UP> <NOP>
+inoremap <DOWN> <NOP>
+inoremap <LEFT> <NOP>
+inoremap <RIGHT> <NOP>
 
 nnoremap <silent> <F2> :NERDTreeMirrorToggle<CR>
 
@@ -279,7 +289,7 @@ au FileType python let g:NERDSpaceDelims = 0
 " Bash settings
 " use tab for indentation
 " http://vim.wikia.com/wiki/Indent_with_tabs,_align_with_spaces
-au FileType sh set noexpandtab  
+au FileType sh set noexpandtab
 
 " a Tab2Space and a Space2Tab command that convert leading whitespace
 " http://vim.wikia.com/wiki/VimTip1592
