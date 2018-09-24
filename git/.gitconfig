@@ -17,6 +17,7 @@
     rh  = git reset --hard
     rs  = git reset --soft
     rlc = !git reset --hard HEAD~1                  # Remove last commit
+    ru  = git clean -fd                             # Remove local untracked files
     st  = status
     ulc = reset --soft HEAD~1                       # Undo last commit
 
