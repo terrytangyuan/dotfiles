@@ -9,7 +9,7 @@ I put Vim related settings in `plugin/settings/Settings.vim`, and isolate other 
 ```
 # Assume currently in dotfiles root directory
 rm -rf ~/.vim
-cp -R misc/vim/ ~/.vim
+cp -R editor/vim/ ~/.vim
 mv ~/.vim/vimrc ~/.vimrc
 ```
 
