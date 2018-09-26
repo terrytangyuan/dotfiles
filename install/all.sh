@@ -53,6 +53,7 @@ apps=(
     hunspell
     poppler --with-qt --enable-xpdf-headers
     glances
+    zsh
 )
 
 brew install "${apps[@]}"
@@ -72,9 +73,13 @@ apps=(
     virtualbox
     intellij-idea
     minikube
+    iterm2
 )
 
 brew cask install "${apps[@]}"
+
+# oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 # JVM
 brew cask install java
