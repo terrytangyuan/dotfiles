@@ -1,30 +1,55 @@
 [alias]
 
-    a   = add
-    aa  = add -A
-    ac  = !git add -A && git commit -m               # Commit all changes
-    ak  = git config --global credential.helper osxkeychain # Auto update/use the saved credential
-    am  = commit --amend
-    ar  = git remote add
-    br  = branch
-    c   = commit -m
-    co  = checkout
-    cp  = cherry-pick
-    cro = git remote set-url origin                 # Change remote origin
-    d   = diff
-    g   = log --graph --pretty=custom               # Show custom graph
-    l   = log --pretty=custom                       # Show custom log
-    p   = push
-    rh  = git reset --hard
-    rs  = git reset --soft
-    rlc = !git reset --hard HEAD~1                  # Remove last commit
-    ru  = git clean -fd                             # Remove local untracked files
-    st  = status
-    ulc = reset --soft HEAD~1                       # Undo last commit
-    # Update config to Personal account
-    up  = git config user.email terrytangyuan@gmail.com && git config user.name terrytangyuan && git ak
-    # Update config to Work account
-    uw  = git config user.email yuan.tang@antfin.com && git config user.name yuan.tang && git ak
+    a   = add                                           # Add
+    aa  = add -A                                        # Add All
+    ac  = !git add -A && git commit -m                  # Add and Commit
+    ak  = config --global credential.helper osxkeychain # Auto Key (automatically update/use the saved credential)
+    am  = commit --amend                                # Ammend commit message
+    ar  = remote add                                    # Add Remote
+    br  = branch                                        # Branch
+    c   = commit -m                                     # Commit with Message
+    co  = checkout                                      # Check Out
+    cp  = cherry-pick                                   # Cherry Pick
+    cro = remote set-url origin                         # Change remote origin
+    d   = diff                                          # Difference
+    g   = log --graph --pretty=custom                   # Graph
+    l   = log --pretty=custom                           # Log
+    p   = push                                          # Push
+    rh  = reset --hard                                  # Reset Hard
+    rs  = reset --soft                                  # Reset Soft
+    rlc = !git reset --hard HEAD~1                      # Remove Last Commit
+    ru  = clean -fd                                     # Remove Untracked
+    st  = status                                        # Status
+    ulc = reset --soft HEAD~1                           # Undo last commit
+
+    # Auto Upstream (automatically finds and sets upstream for the forked repo that's currently in)
+    au = "!f() { \
+        URL=$(git config --get remote.origin.url) && \
+        REPO_NAME=$(basename $(basename $URL) .git) && \
+        ORG_NAME=$(basename $(dirname $URL)) && \
+        UPSTREAM=$(curl -X GET https://api.github.com/repos/$ORG_NAME/$REPO_NAME --silent | jq '.parent' | jq '.ssh_url' | tr -d '\"') && \
+        echo Adding ${UPSTREAM} as the upstream ... && \
+        git remote add upstream $UPSTREAM; \
+    }; f"
+
+    # Credit an author on the latest commit
+    credit = "!f() { \
+        if [ -n \"$1\" ] && [ -n \"$2\" ]; then \
+            git commit --amend --author \"$1 <$2>\" -C HEAD; \
+        fi \
+    }; f"
+
+    # Update Personal (update config to personal account)
+    up  = "!f() { \
+        git config user.email terrytangyuan@gmail.com && \
+        git config user.name terrytangyuan; \
+    }; f"
+
+    # Update Work (update config to work account)
+    uw  = "!f() { \
+        git config user.email yuan.tang@antfin.com && \
+        git config user.name yuan.tang; \
+    }; f"
 
     # Automatically finds and sets upstream for the forked repo that's currently in
     au = "!f() { \
