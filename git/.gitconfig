@@ -10,6 +10,7 @@
     c   = commit -m
     co  = checkout
     cp  = cherry-pick
+    cro = git remote set-url origin                 # Change remote origin
     d   = diff
     g   = log --graph --pretty=custom               # Show custom graph
     l   = log --pretty=custom                       # Show custom log
@@ -20,6 +21,10 @@
     ru  = git clean -fd                             # Remove local untracked files
     st  = status
     ulc = reset --soft HEAD~1                       # Undo last commit
+    # Update config to Personal account
+    up  = git config user.email terrytangyuan@gmail.com && git config user.name terrytangyuan && git ak
+    # Update config to Work account
+    uw  = git config user.email yuan.tang@antfin.com && git config user.name yuan.tang && git ak
 
     # Automatically finds and sets upstream for the forked repo that's currently in
     au = "!f() { \
