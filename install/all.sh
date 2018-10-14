@@ -67,6 +67,7 @@ brew tap caskroom/versions
 
 apps=(
     atom
+    sublime-text
     pycharm-ce
     docker
     docker-machine
