@@ -22,8 +22,8 @@
     st  = status                                        # Status
     ulc = reset --soft HEAD~1                           # Undo last commit
 
-    # Cache credentials (timeout in seconds 30 days)
-    cc  = config --global credential.helper 'cache --timeout=2592000'
+    # Cache credentials
+    cc  = config --global credential.helper cache
 
     # Auto Upstream (automatically finds and sets upstream for the forked repo that's currently in)
     au = "!f() { \
