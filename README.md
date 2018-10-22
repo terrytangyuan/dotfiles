@@ -20,3 +20,4 @@ Command -> Option
 * Show hidden files
   * Run `defaults write com.apple.finder AppleShowAllFiles YES`
   * Hold `Option` key, then right click on the Finder icon in the dock and click Relaunch.
+* Enable "Warn Before Quitting" in Chrome

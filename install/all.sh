@@ -54,6 +54,7 @@ apps=(
     poppler --with-qt --enable-xpdf-headers
     glances
     zsh
+    libgit2
 )
 
 brew install "${apps[@]}"

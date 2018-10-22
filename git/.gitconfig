@@ -25,6 +25,13 @@
     # Cache credentials
     cc  = config --global credential.helper cache
 
+    # Delete tag both local and remote
+    dt = "!f() { \
+        TAG=$1 && \
+        git push --delete origin $TAG && \
+        git tag -d $TAG; \
+    }; f"
+
     # Auto Upstream (automatically finds and sets upstream for the forked repo that's currently in)
     au = "!f() { \
         URL=$(git config --get remote.origin.url) && \
