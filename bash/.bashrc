@@ -12,3 +12,7 @@ kk() {
   fi
   REGEX=$1; kill -9 $(ps u | grep $REGEX | awk '{print $2}')
 }
+
+# Aliases
+
+alias g='git'

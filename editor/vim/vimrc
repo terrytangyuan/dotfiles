@@ -38,16 +38,6 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 " select ALL
 map <C-A> ggVG
 
-" force myself to not to use the arrow keys
-map <UP> <NOP>
-map <DOWN> <NOP>
-map <LEFT> <NOP>
-map <RIGHT> <NOP>
-inoremap <UP> <NOP>
-inoremap <DOWN> <NOP>
-inoremap <LEFT> <NOP>
-inoremap <RIGHT> <NOP>
-
 nnoremap <silent> <F2> :NERDTreeMirrorToggle<CR>
 
 set hlsearch                          " search highlighting
