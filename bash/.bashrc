@@ -16,3 +16,4 @@ kk() {
 # Aliases
 
 alias g='git'
+alias kub='kubectl'
