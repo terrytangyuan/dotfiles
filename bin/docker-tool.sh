@@ -1,0 +1,599 @@
+#!/bin/bash
+
+# -------------------------------------------
+# Author: ohmystack (jiangjun1990@gmail.com)
+# Original repo: https://github.com/ohmystack/docker-tool
+# -------------------------------------------
+
+# Instructions
+# -------------------------------------------
+# INSTALL_DIR='/usr/local/bin'
+# sudo wget -O ${INSTALL_DIR}/docker-tool https://raw.githubusercontent.com/ohmystack/docker-tool/master/docker-tool
+# sudo chmod a+x ${INSTALL_DIR}/docker-tool
+# sudo ln -sf ${INSTALL_DIR}/docker-tool ${INSTALL_DIR}/dt
+#
+# You can use command-line docker-tool or dt for short.
+#
+# Upgrade:
+#
+# dt self-upgrade
+# -------------------------------------------
+
+# default ENVs
+DOCKER_SOCK='unix:///var/run/docker.sock'
+DOCKER="docker -H $DOCKER_SOCK"
+CONFIG_DIR="/etc/docker-tool"
+
+# -----------------
+# Help
+# -----------------
+
+print_usage() {
+	# NOTE: After modification, remember to
+	#       1. Run `:Align |` in vim to align the help info with '|' seperator
+	#       2. Sort the action list by alphabet
+	cat <<-'EOF'
+    __              __                      __                __
+.--|  |.-----.----.|  |--.-----.----.______|  |_.-----.-----.|  |
+|  _  ||  _  |  __||    <|  -__|   _|______|   _|  _  |  _  ||  |
+|_____||_____|____||__|__|_____|__|        |____|_____|_____||__|
+
+	dt (docker-tool)
+
+	Usage:
+	sudo ./docker-tool <action> [args...]
+
+	Actions:
+	  clean-img                        | Clean dangling images
+	  clean-vol                        | (DANGEROUS!!!) Clean dangling volumes, who are not referenced by any containers
+	  clean-container                  | Remove exited containers
+	  img [name]                       | Grep image by given <name>
+	  logs <container-id/name>         | == docker logs --tail=50 -f <container-id/name>
+	  net <container-id/name>          | Show network info (mode, veth pair, ...) of a container
+	  ns-net <container-id/name>       | Enter the net namespace of a container, with all host's tools available. Use "exit" to exit
+	  pid <container-id/name>          | Get the pid of a container
+	  ps [-a] [name]                   | Grep from docker ps
+	  run ...                          | == docker run -it --rm ...
+	  ssh <container-id/name or image> | Enter the bash/sh of a container or image
+	  config [-l|--list] <key> <value> | config docker-tool, save under /etc/docker-tool/ (available keys: tag-prefix)
+	                                   |   '-l', '--list' to show all the current configurations.
+	  tag [-p] [--rm] <image>          | tag the image by configured prefix.
+	                                   |   '-p' to push the new image after tagging it.
+	                                   |   '--rm' to remove the new local image after pushing it. (must use --rm with -p)
+
+	Other actions:
+	  clean-k8s                        | Clean dangling k8s containers
+	  self-upgrade                     | Upgrade "docker-tool" to the latest version
+
+	EOF
+}
+
+# -----------------
+# Utils - common
+# -----------------
+
+# echo with 256 color
+# Usage: echo_color <color_id> <text>
+echo_color() {
+	dye=$(echo -e "\x1B[38;5;${1}m")
+	stop_dye=$(echo -e "\x1B[0m")
+	echo "${dye}${2}${stop_dye}"
+}
+
+echo_err() {
+	echo_color 202 "$1" 1>&2
+}
+
+echo_success() {
+	echo_color 148 "$1" 1>&2
+}
+
+command_exists() {
+	which $1 > /dev/null 2>&1
+}
+
+# Ensure there are <count> args
+# Usage: ensure_count_args 1 "$@"
+ensure_count_args() {
+	local require=$1
+	shift
+	if [ "$#" -lt $require ]; then
+		echo_err "Error: need $require args at least, but $# given"
+		exit 1
+	fi
+}
+
+ensure_command_exists() {
+	if ! command_exists $1 ; then
+		echo_err "Error: cannot find '$1' program"
+		exit 1
+	fi
+}
+
+# Prompt a string to ask user y/n
+# It returns exit code to indicate user's answer. 
+# Exit code 0 -> ok, 1 -> error
+# Usage:
+#   if ask_user [what you want to ask] ; then ... ; fi
+ask_user() {
+	local answer
+	echo ""
+	read -p "$1 (y/n) " answer
+	case $answer in
+		"y"*|"Y"*)
+			return 0
+			;;
+		"n"*|"N"*)
+			return 1
+			;;
+	esac
+	return 1
+}
+
+# echo_by_result will echo messages according to the given return code $1,
+# if it is 0, return $2 success message,
+# if it is not 0, return $3 failure message.
+# "-e|--exit" will exit immediately if it failed.
+# Usage:
+#   echo_by_result --err-exit $(ls -lh) "ok" "failed"
+#   echo_by_result --err-exit $? "ok" "failed"
+echo_by_result() {
+	local exit_now=false
+	case "$1" in
+		'-e'|'--err-exit')
+			exit_now=true
+			shift
+			;;
+	esac
+
+	local ret_code="$1"
+	if [ $ret_code -eq 0 ] ; then
+		echo_success "$2"
+	else
+		echo_err "$3"
+		if $exit_now ; then
+			exit $ret_code
+		fi
+	fi
+	return $ret_code
+}
+
+# read_config reads the config value by key from CONFIG_DIR
+read_config() {
+	if [ -z "${1}" ] ; then
+		echo_err "must provide a config key"
+		exit 1
+	fi
+	local key=$1
+	local file=$CONFIG_DIR/$key
+	if [ ! -f $file ] ; then
+		echo_err "no such config"
+		exit 1
+	fi
+	cat $file
+}
+
+# -----------------
+# Utils - Docker
+# -----------------
+
+# Whether this is a Docker image name, already pulled
+# Exit code 0 -> ok, 1 -> error
+# Usage:
+#   if is_image <name> ; then ... ; fi
+is_image() {
+	local keyword=$1
+	# If keyword doesn't have a colon, which means no tag specified, add "latest" tag for it
+	if [ $(echo $keyword | cut -s -d ':' -f 1 | wc -l) -eq 0 ] ; then
+		keyword=${keyword}:latest
+	fi
+	if [ $($DOCKER images -q $keyword | wc -l) -gt 0 ] ; then
+		return 0
+	fi
+	return 1
+}
+
+# Whether this is a Docker container ID/name
+# Exit code 0 -> ok, 1 -> error
+# Usage:
+#   if is_container <name> <ps_opts> ; then ... ; fi
+#   e.g. is_container xxx --all
+is_container() {
+	local keyword=$1
+	local ps_opts=$2
+	# Try to match with container ID
+	if [ $($DOCKER ps -q $ps_opts -f "id=$keyword" | wc -l) -gt 0 ] ; then
+		return 0
+	fi
+	# Try to match with container fullname
+	for c_name in $($DOCKER ps $ps_opts --format "{{.Names}}") ; do
+		if [ $c_name = $keyword ] ; then
+			return 0
+		fi
+	done
+	return 1
+}
+
+# Ensure that $1 is a container id or name
+# Exit code 0 -> yes, 1 -> no
+# Usage:
+#   if ensure_is_container <name> <ps_opts> ; then ... ; fi
+#   e.g. ensure_is_container xxx --all
+ensure_is_container() {
+	local keyword=$1
+	local opts=$2
+	local running="a running"
+	if [ "$opts" == "-a" ] || [ "$opts" == "--all" ] ; then
+		running="a"
+	fi
+	if ! is_container $keyword $opts; then
+		echo_err "'$keyword' is not $running container id or name"
+		exit 1
+	fi
+}
+
+# -----------------
+# Actions
+# -----------------
+
+action_pid() {
+	ensure_count_args 1 "$@"
+	ensure_is_container $1
+
+	exec $DOCKER inspect -f {{.State.Pid}} $1
+}
+
+action_net() {
+	ensure_count_args 1 "$@"
+	ensure_command_exists nsenter
+	ensure_command_exists ethtool
+	ensure_is_container $1
+
+	local pid=$(action_pid $1)
+
+	local network_mode=$($DOCKER inspect -f {{.HostConfig.NetworkMode}} $1)
+	echo_color 135 "NetworkMode: $network_mode"
+	case $network_mode in
+		'default')
+			local in_veth_statistcs=$(nsenter -t $pid -n -F -- ethtool --statistics eth0 | tail -1)
+			local out_veth_id=${in_veth_statistcs##*:}  # Get the value after ":"
+			local out_veth_dev=$(ip link | grep $out_veth_id | tr -d ' ' | cut -d ':' -f 2)
+
+			echo_color 222 "(Outside)"
+			ip addr show $out_veth_dev
+
+			echo_color 39 "(Inside container)"
+			nsenter -t $pid -n -F -- ip addr show eth0
+			;;
+		'host')
+			nsenter -t $pid -n -F -- ip addr show eth0
+			;;
+		'container:'*)
+			local cid=${network_mode##*:}  # Get the value after ":"
+			echo_color 135 "(In container:$cid)"
+			action_net $cid
+			;;
+	esac
+}
+
+action_img() {
+	if [ $# -lt 1 ] ; then
+		exec $DOCKER images
+	fi
+	$DOCKER images | grep --color=auto $1
+}
+
+action_clean_img() {
+	if [ $($DOCKER images -f "dangling=true" -q | wc -l) -eq 0 ] ; then
+		echo "Already clean."
+		return 0
+	else
+		$DOCKER images -f "dangling=true"
+	fi
+
+	if ask_user "Are you sure to delete these images?" ; then
+		$DOCKER rmi $($DOCKER images -f "dangling=true" -q)
+	else
+		echo "Canceled."
+	fi
+}
+
+action_clean_vol() {
+	if [ $($DOCKER volume ls -f "dangling=true" -q | wc -l) -eq 0 ] ; then
+		echo "Already clean."
+		return 0
+	else
+		$DOCKER volume ls -f "dangling=true"
+	fi
+
+	if ask_user "Are you sure to delete these volumes?" ; then
+		$DOCKER volume rm $($DOCKER volume ls -f "dangling=true" -q)
+	else
+		echo "Canceled."
+	fi
+}
+
+action_clean_container() {
+	if [ $($DOCKER ps -aq --filter status=exited | wc -l) -eq 0 ] ; then
+		echo "Already clean."
+		return 0
+	else
+		$DOCKER ps -aq --filter status=exited
+	fi
+
+	if ask_user "Are you sure to delete these containers?" ; then
+		$DOCKER rm -v $($DOCKER ps -aq --filter status=exited)
+	else
+		echo "Canceled."
+	fi
+}
+
+action_ns_net() {
+	ensure_count_args 1 "$@"
+	ensure_command_exists nsenter
+	ensure_is_container $1
+
+	echo '(Remind: type "exit" to exit the namespace)'
+	exec nsenter --target $(action_pid $1) --net
+}
+
+action_ssh() {
+	ensure_count_args 1 "$@"
+	local name=$1
+	local exit_code
+
+	if is_container $name ; then
+		# We don't use 'which' to detect command in containers because 'which' is not installed in some images.
+		# But in most cases, 'ls' is installed. Nor, probably there's no other commands availble.
+		if $DOCKER exec -it $name ls /bin/bash > /dev/null 2>&1 ; then
+			echo_color 148 "Enter container '${name}', using /bin/bash"
+			exec $DOCKER exec -it $name /bin/bash
+		elif $DOCKER exec -it $name ls > /dev/null 2>&1 ; then
+			echo_color 148 "Enter container '${name}', using /bin/sh"
+			exec $DOCKER exec -it $name /bin/sh
+		fi
+		echo_err "cannot find '/bin/bash' or '/bin/sh' in container: $name"
+		exit 1
+	fi
+
+	if is_image $name ; then
+		echo_color 148 "Enter image '${name}'"
+
+		echo_color 64 "- Try to use /bin/bash"
+		$DOCKER run -it --rm --entrypoint=/bin/bash $name
+		exit_code=$?
+		if [ ! $exit_code -eq 125 ] && [ ! $exit_code -eq 127 ] ; then  # exit code 125: exec failed, 127: no such command
+			exit $exit_code
+		fi
+
+		echo_color 64 "- Try to use /bin/sh"
+		$DOCKER run -it --rm --entrypoint=/bin/sh $name
+		exit_code=$?
+		if [ ! $exit_code -eq 125 ] && [ ! $exit_code -eq 127 ] ; then
+			exit $exit_code
+		fi
+
+		echo_err "cannot find '/bin/bash' or '/bin/sh' in image: $name"
+		exit 1
+	fi
+
+	echo_err "'$name' is not a running container id/fullname, nor an image name"
+	exit 1
+}
+
+action_run() {
+	exec $DOCKER run -it --rm "$@"
+}
+
+action_logs() {
+	ensure_count_args 1 "$@"
+	ensure_is_container $1 --all
+
+	exec $DOCKER logs --tail=50 -f "$@"
+}
+
+action_ps() {
+	local opts=""
+	local keyword=""
+	while [ -n "$1" ]; do
+		case $1 in
+			'-a')
+				opts+=" -a"
+				;;
+			*)
+				keyword=$1
+				break
+				;;
+		esac
+		shift
+	done
+	if [ -n "$keyword" ]; then
+		$DOCKER ps $opts | grep --color=auto $1
+	else
+		exec $DOCKER ps $opts
+	fi
+}
+
+action_config() {
+	local list_only=false
+	case $1 in
+		'-l'|'--list')
+			list_only=true
+			;;
+	esac
+
+	# List
+	if $list_only ; then
+		local filename
+		pushd $CONFIG_DIR > /dev/null
+		for filename in $(ls) ; do echo "$filename=$(cat $filename)"; done
+		popd > /dev/null
+		exit 0
+	fi
+
+	# Set
+	if [ ! -d $CONFIG_DIR ] ; then
+		mkdir -p $CONFIG_DIR
+	fi
+	if [ $# -lt 2 ]; then
+		echo_err "must have at least 2 args: key, value"
+		exit 1
+	fi
+	local key=$1
+	local value=$2
+	echo $value > $CONFIG_DIR/$key
+}
+
+action_tag() {
+	local push=false
+	local delete=false
+	while [ -n "$1" ]; do
+		case $1 in
+			'-p'|'--push')
+				push=true
+				;;
+			'--rm')
+				delete=true
+				;;
+			*)
+				local raw_img=$1
+				;;
+		esac
+		shift
+	done
+	if [ -z "${raw_img}" ] ; then
+		echo_err "must provide an image name"
+		exit 1
+	fi
+	local prefix=$(read_config "tag-prefix")
+	if [ -z "${prefix}" ] ; then
+		echo_err "tag-prefix not set.\nRun this: dt config tag-prefix <value>"
+		exit 1
+	fi
+	# Get the string after the last "/"
+	local img_name=${raw_img##*/}
+	local new_img=${prefix}/${img_name}
+
+	$DOCKER tag $raw_img $new_img
+	echo_by_result --err-exit $? " >>> new image: $new_img" "failed to tag image."
+	if $push ; then
+		$DOCKER push $new_img
+		echo_by_result --err-exit $? " >>> pushed image: $new_img" "failed to push image '$new_img'"
+		if $delete ; then
+			$DOCKER rmi $new_img
+			echo_by_result --err-exit $? " >>> removed local image: $new_img" "failed to remove local image '$new_img'"
+		fi
+	fi
+}
+
+action_clean_k8s() {
+	if [ $($DOCKER ps -aq -f status=exited -f name=k8s | wc -l) -eq 0 ] ; then
+		echo "Already clean."
+		return 0
+	else
+		$DOCKER ps -a -f status=exited -f name=k8s
+	fi
+
+	if ask_user "Are you sure to delete these containers?" ; then
+		$DOCKER rm -v $($DOCKER ps -aq -f status=exited -f name=k8s)
+	else
+		echo "Canceled."
+	fi
+}
+
+action_self_upgrade() {
+	local self=$0
+	local dt_download_link="https://raw.githubusercontent.com/ohmystack/docker-tool/master/docker-tool"
+	local dt_repo="https://github.com/ohmystack/docker-tool"
+	# If user launchs this script from a symlink, find the real file path
+	if [ -L $self ] ; then
+		self=$(python -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' $self)
+	fi
+	local base=$(basename $self)
+	if [ -z "${base}" ] ; then
+		echo_err "failed to find docker-tool installation path."
+		exit 1
+	fi
+	echo "upgrade docker-tool from $dt_repo ..."
+	cp $self /tmp/ && echo "(the old docker-tool has been backuped into /tmp)"
+	# Do this in one line, and exit immediately to prevent executing wrong lines in the new downloaded script.
+	curl -s $dt_download_link > $self && chmod a+x $self && rm /tmp/$base && echo "done." && exit 0 || echo_err "failed." && mv /tmp/$base $self && exit 1
+}
+
+# -----------------
+# Main
+# -----------------
+
+if [ -n "$1" ]; then
+	case $1 in
+		'help'|'-h'|'--help')
+			print_usage
+			;;
+		'pid')
+			shift
+			action_pid "$@"
+			;;
+		'net')
+			shift
+			action_net "$@"
+			;;
+		'img'|'images'|'image')
+			shift
+			action_img "$@"
+			;;
+		'clean-img'|'clean-images')
+			shift
+			action_clean_img "$@"
+			;;
+		'clean-vol'|'clean-volume')
+			shift
+			action_clean_vol "$@"
+			;;
+		'clean-container')
+			shift
+			action_clean_container "$@"
+			;;
+		'ns-net')
+			shift
+			action_ns_net "$@"
+			;;
+		'ssh')
+			shift
+			action_ssh "$@"
+			;;
+		'run')
+			shift
+			action_run "$@"
+			;;
+		'logs'|'log')
+			shift
+			action_logs "$@"
+			;;
+		'ps')
+			shift
+			action_ps "$@"
+			;;
+		'config')
+			shift
+			action_config "$@"
+			;;
+		'tag')
+			shift
+			action_tag "$@"
+			;;
+		'clean-k8s')
+			shift
+			action_clean_k8s "$@"
+			;;
+		'self-upgrade')
+			shift
+			action_self_upgrade "$@"
+			;;
+		*)
+			echo_err "Error: unknown action '$1'"
+			exit 1
+			;;
+	esac
+else
+	print_usage
+fi
