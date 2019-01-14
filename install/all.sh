@@ -55,6 +55,7 @@ apps=(
     glances
     zsh
     libgit2
+    qpdf
 )
 
 brew install "${apps[@]}"
