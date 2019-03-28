@@ -15,6 +15,8 @@
     g   = log --graph --pretty=custom                   # Graph
     l   = log --pretty=custom                           # Log
     p   = push                                          # Push
+    pl  = pull                                          # Pull
+    plr = pull origin master --rebase                   # Pull origin master with rebase
     rh  = reset --hard                                  # Reset Hard
     rs  = reset --soft                                  # Reset Soft
     rlc = !git reset --hard HEAD~1                      # Remove Last Commit
