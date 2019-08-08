@@ -4,6 +4,7 @@
     aa  = add -A                                        # Add All
     ac  = !git add -A && git commit -s -m               # Add and Commit
     ak  = config --global credential.helper osxkeychain # Auto Key (automatically update/use the saved credential)
+    as  = config --global credential.helper store	# Auto save credentials
     am  = commit --amend                                # Ammend commit message
     ar  = remote add                                    # Add Remote
     br  = branch                                        # Branch
