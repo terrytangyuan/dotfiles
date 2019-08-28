@@ -56,6 +56,12 @@
         git config user.email yuan.tang@antfin.com && \
         git config user.name yuan.tang; \
     }; f"
+    
+    # Update Georgia Tech (update config to school account)
+    ugt  = "!f() { \
+        git config user.email ytang374@gatech.edu && \
+        git config user.name ytang374; \
+    }; f"
 
     # Credit an author on the latest commit
     credit = "!f() { \
