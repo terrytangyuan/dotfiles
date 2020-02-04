@@ -5,23 +5,8 @@
 # Original repo: https://github.com/ohmystack/docker-tool
 # -------------------------------------------
 
-# Instructions
-# -------------------------------------------
-# INSTALL_DIR='/usr/local/bin'
-# sudo wget -O ${INSTALL_DIR}/docker-tool https://raw.githubusercontent.com/ohmystack/docker-tool/master/docker-tool
-# sudo chmod a+x ${INSTALL_DIR}/docker-tool
-# sudo ln -sf ${INSTALL_DIR}/docker-tool ${INSTALL_DIR}/dt
-#
-# You can use command-line docker-tool or dt for short.
-#
-# Upgrade:
-#
-# dt self-upgrade
-# -------------------------------------------
-
 # default ENVs
-DOCKER_SOCK='unix:///var/run/docker.sock'
-DOCKER="docker -H $DOCKER_SOCK"
+DOCKER="docker"
 CONFIG_DIR="/etc/docker-tool"
 
 # -----------------
@@ -597,3 +582,4 @@ if [ -n "$1" ]; then
 else
 	print_usage
 fi
+

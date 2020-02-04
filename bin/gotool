@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# -------------------------------------------
+# -----------------------------------------------------------------------------------
 # Author: ohmystack (jiangjun1990@gmail.com)
 # Original repo: https://github.com/ohmystack/gotool
-# -------------------------------------------
+# Example: cd go-workspace/; source gotool a; cd src/github.com/kubeflow/mpi-operator
+# -----------------------------------------------------------------------------------
 
 usage() {
 	cat <<-EOF
