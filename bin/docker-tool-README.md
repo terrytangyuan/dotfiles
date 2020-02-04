@@ -1,5 +1,7 @@
 # dt (docker-tool)
 
+by ohmystack (jiangjun1990@gmail.com)
+
 It is a convenient tool for many Docker operations.
 
 ```plain
