@@ -1,29 +1,31 @@
 [alias]
 
-    a   = add                                           # Add
-    aa  = add -A                                        # Add All
-    ac  = !git add -A && git commit -s -m               # Add and Commit
-    ak  = config --global credential.helper osxkeychain # Auto Key (automatically update/use the saved credential)
-    as  = config --global credential.helper store	# Auto save credentials
-    am  = commit --amend                                # Ammend commit message
-    ar  = remote add                                    # Add Remote
-    br  = branch                                        # Branch
-    c   = commit -m                                     # Commit with Message
-    co  = checkout                                      # Check Out
-    cp  = cherry-pick                                   # Cherry Pick
-    cro = remote set-url origin                         # Change remote origin
-    d   = diff                                          # Difference
-    g   = log --graph --pretty=custom                   # Graph
-    l   = log --pretty=custom                           # Log
-    p   = push                                          # Push
-    pl  = pull                                          # Pull
-    plr = pull origin master --rebase                   # Pull origin master with rebase
-    rh  = reset --hard                                  # Reset Hard
-    rs  = reset --soft                                  # Reset Soft
-    rlc = !git reset --hard HEAD~1                      # Remove Last Commit
-    ru  = clean -fd                                     # Remove Untracked
-    st  = status                                        # Status
-    ulc = reset --soft HEAD~1                           # Undo last commit
+    a    = add                                           # Add
+    aa   = add -A                                        # Add All
+    ac   = !git add -A && git commit -s -m               # Add and Commit
+    ak   = config --global credential.helper osxkeychain # Auto Key (automatically update/use the saved credential)
+    as   = config credential.helper store                # Auto store credentials
+    am   = commit --amend                                # Ammend commit message
+    ar   = remote add                                    # Add Remote
+    br   = branch                                        # Branch
+    c    = commit -m                                     # Commit with Message
+    cl   = clean -fd                                     # Remove Untracked
+    co   = checkout                                      # Check Out
+    cp   = cherry-pick                                   # Cherry Pick
+    cro  = remote set-url origin                         # Change remote origin
+    d    = diff                                          # Difference
+    g    = log --graph --pretty=custom                   # Graph
+    l    = log --pretty=custom                           # Log
+    p    = push                                          # Push
+    po   = push origin                                   # Push origin
+    pl   = pull                                          # Pull
+    plom = pull origin master --rebase                   # Pull origin master with rebase
+    plum = pull upstream master --rebase                 # Pull upstream master with rebase
+    rh   = reset --hard                                  # Reset Hard
+    rs   = reset --soft                                  # Reset Soft
+    rlc  = !git reset --hard HEAD~1                      # Remove Last Commit
+    st   = status                                        # Status
+    ulc  = reset --soft HEAD~1                           # Undo last commit
 
     # Cache credentials
     cc  = config --global credential.helper cache
@@ -45,6 +47,13 @@
         git remote add upstream $UPSTREAM; \
     }; f"
 
+    # Credit an author on the latest commit
+    credit = "!f() { \
+        if [ -n \"$1\" ] && [ -n \"$2\" ]; then \
+            git commit --amend --author \"$1 <$2>\" -C HEAD; \
+        fi \
+    }; f"
+
     # Update Personal (update config to personal account)
     up  = "!f() { \
         git config user.email terrytangyuan@gmail.com && \
@@ -56,18 +65,11 @@
         git config user.email yuan.tang@antfin.com && \
         git config user.name yuan.tang; \
     }; f"
-    
+
     # Update Georgia Tech (update config to school account)
     ugt  = "!f() { \
         git config user.email ytang374@gatech.edu && \
         git config user.name ytang374; \
-    }; f"
-
-    # Credit an author on the latest commit
-    credit = "!f() { \
-        if [ -n \"$1\" ] && [ -n \"$2\" ]; then \
-            git commit --amend --author \"$1 <$2>\" -C HEAD; \
-        fi \
     }; f"
 
     # Merge GitHub pull request on top of the `master` branch
