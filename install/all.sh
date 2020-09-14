@@ -24,6 +24,7 @@ apps=(
     moreutils
     findutils
     git
+    github/gh/gh
     grep --with-default-names
     imagemagick --with-webp
     ffmpeg
