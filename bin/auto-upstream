@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+URL=$(git config --get remote.origin.url) && \
+REPO_NAME=$(basename $(basename $URL) .git) && \
+ORG_NAME=$(dirname $(echo ${URL} | sed -nr  's/^(https|git)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+).git$$/\4\/\3/p')) && \
+UPSTREAM=$(curl -X GET https://api.github.com/repos/$ORG_NAME/$REPO_NAME --silent | jq '.parent' | jq '.clone_url' | tr -d '\"') && \
+echo Adding ${UPSTREAM} as the upstream ... && \
+git remote rm upstream
+git remote add upstream $UPSTREAM;
