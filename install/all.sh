@@ -51,6 +51,7 @@ apps=(
     cmake
     qt
     docker
+    k3d
     hunspell
     poppler --with-qt --enable-xpdf-headers
     glances
@@ -64,10 +65,6 @@ brew install "${apps[@]}"
 # Remove outdated versions from the cellar
 brew cleanup
 
-# Install Caskroom
-brew tap caskroom/cask
-brew tap caskroom/versions
-
 apps=(
     atom
     sublime-text
@@ -76,7 +73,6 @@ apps=(
     docker-machine
     virtualbox
     intellij-idea
-    minikube
     iterm2
 )
 
@@ -90,10 +86,8 @@ brew cask install java
 brew install scala
 
 # Install R and RStudio
-brew cask install xquartz
-brew tap homebrew/science
-brew install --with-x11 r
-brew cask install --appdir=/Applications rstudio
+brew install xquartz r
+brew install --appdir=/Applications rstudio
 
 # Go
 ## GVM
@@ -109,4 +103,4 @@ gem install jekyll jekyll-paginate
 npm install -g typescript
 
 # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
-brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv qlimagesize webpquicklook suspicious-package
+brew install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv qlimagesize webpquicklook suspicious-package
