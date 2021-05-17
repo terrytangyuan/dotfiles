@@ -55,7 +55,7 @@
     # Update Personal (update config to personal account)
     up  = "!f() { \
         git config user.email terrytangyuan@gmail.com && \
-        git config user.name terrytangyuan; \
+        git config user.name \"Yuan Tang\"; \
     }; f"
 
     # Update Work (update config to work account)
