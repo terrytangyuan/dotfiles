@@ -104,3 +104,8 @@ npm install -g typescript
 
 # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
 brew install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv qlimagesize webpquicklook suspicious-package
+# Alternative if Quick Look Plugins are not working: https://github.com/sbarex/SourceCodeSyntaxHighlight#installation
+# brew reinstall qlcolorcode
+# xattr -d -r com.apple.quarantine ~/Library/QuickLook/QLColorCode.qlgenerator
+# qlmanage -r
+brew install --cask syntax-highlight
