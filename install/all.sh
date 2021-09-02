@@ -25,10 +25,9 @@ apps=(
     findutils
     git
     github/gh/gh
-    grep --with-default-names
-    imagemagick --with-webp
+    grep
+    imagemagick
     ffmpeg
-    python
     python3
     source-highlight
     wget
@@ -36,11 +35,6 @@ apps=(
     jq
     gradle
     go
-    dep
-    etcd
-    maven
-    sbt
-    gradle
     shellcheck
     postgresql
     gcc
@@ -53,7 +47,7 @@ apps=(
     docker
     k3d
     hunspell
-    poppler --with-qt --enable-xpdf-headers
+    poppler
     glances
     zsh
     libgit2
