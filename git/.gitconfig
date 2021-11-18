@@ -116,3 +116,7 @@
 
 [credential]
 	helper = osxkeychain
+
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/
+    # This is for accessing private repos in go.mod
