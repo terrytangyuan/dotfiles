@@ -119,4 +119,5 @@
 
 [url "ssh://git@github.com/"]
     insteadOf = https://github.com/
-    # This is for accessing private repos in go.mod
+    # This is for accessing private repos in go.mod locally
+    # If running on GitHub Actions, use `git config --global url."https://${GITHUB_TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"`
