@@ -26,6 +26,10 @@ kdecode () {
 
 alias g='git'
 alias k='kubectl'
+alias kp='kubectl get pods'
+alias kl='kubectl logs'
+alias kd='kubectl describe'
+
 alias kc='kubectx'
 alias kns='kubens'
 export GOPATH=~/go
