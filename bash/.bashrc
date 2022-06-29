@@ -34,3 +34,4 @@ alias kc='kubectx'
 alias kns='kubens'
 export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
+export JAVA_HOME="/Users/yuan.tang/Library/Java/JavaVirtualMachines/liberica-1.8.0_333"
