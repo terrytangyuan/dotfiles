@@ -14,6 +14,9 @@
   * Hold `Option` key, then right click on the Finder icon in the dock and click Relaunch.
 * Stop Mac from adding apps to dock:
   * System Preferences -> Dock & Menu Bar -> uncheck "Show recent applications in Dock"
+* Disable smart quotes when editing notes:
+  * System Preferences > Keyboard > Text, then unchecking "Use smart quotes and dashes".
+  * Notes -> Edit -> Spelling and Grammar -> uncheck all options.
 * Add `subl` shortcut: `sudo ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl`
 * Copy git and bash configurations.
 * Generate new SSH key via `ssh-keygen -t ed25519 -C "terrytangyuan@gmail.com"; cat /Users/terrytangyuan/.ssh/id_ed25519.pub` and add it to GitHub [here](https://github.com/settings/keys).
