@@ -1,6 +1,6 @@
 # dotfiles
 
-* Run `make sync` to upload dotfiles to Github.
+* Run `make sync` to update/upload dotfiles to Github.
 
 ## Setup
 
@@ -17,10 +17,29 @@
 * Disable smart quotes when editing notes:
   * System Preferences > Keyboard > Text, then unchecking "Use smart quotes and dashes".
   * Notes -> Edit -> Spelling and Grammar -> uncheck all options.
-* Turn off the sound sound when connecting to the charger: `defaults write com.apple.PowerChime ChimeOnNoHardware -bool true;killall PowerChime`
-* Add `subl` shortcut: `sudo ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl`
-* Copy git and bash configurations.
+* Install ZSH
+* [Disable Caps Lock Indicator](https://discussions.apple.com/thread/255159504)
+* Install `git`
 * Generate new SSH key via `ssh-keygen -t ed25519 -C "terrytangyuan@gmail.com"; cat /Users/terrytangyuan/.ssh/id_ed25519.pub` and add it to GitHub [here](https://github.com/settings/keys).
+* Install `brew`
+* Clone this repo
+* Run `./setup_machine.sh`
+* Copy zsh configurations to `~/.zshrc`
+* Add `subl` shortcut: `sudo ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl`
+
+### Deprecated
+
+* Turn off the sound sound when connecting to the charger: `defaults write com.apple.PowerChime ChimeOnNoHardware -bool true;killall PowerChime`
+* [Deprecated] Get iTerm.
+* [Deprecated] Run `make setup` to setup development environment for a new Mac.
+* [Deprecated] Windows keyboard remapping
+
+```
+Control -> Command
+Option -> Option
+Command -> Option
+```
+* [Deprecated] Enable "Warn Before Quitting" in Chrome
 * Fix the issue with `QLColorCode.qlgenerator` by following [this instruction](https://github.com/anthonygelibert/QLColorCode/issues/51#issuecomment-566209187) (or see below) for `com.adobe.pdf` and `net.daringfireball.markdown` content type.
  >     1. `brew cask install QLColorCode`
  > 
@@ -34,19 +53,3 @@
  > Now QLColorCode should work via spacebar (you might need to relaunch the finder).
  > 
  > This indicates that the file `~/Library/QuickLook/QLColorCode.qlgenerator/Contents/Info.plist` needs to be updated for Catalina MacOS 10.15(.2) as the file UTI properties seems now to be different from the ones that were recognised on Mojave MacOS 10.14.
-
-
-
-
-### Deprecated
-
-* [Deprecated] Get iTerm.
-* [Deprecated] Run `make setup` to setup development environment for a new Mac.
-* [Deprecated] Windows keyboard remapping
-
-```
-Control -> Command
-Option -> Option
-Command -> Option
-```
-* [Deprecated] Enable "Warn Before Quitting" in Chrome
