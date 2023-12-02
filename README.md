@@ -8,14 +8,13 @@
   * Keyboard -> shortcuts -> input sources -> select the previous input source -> press Tab -> press Command + Space
 * Disable Spotlight shortcuts
   * Keyboard -> shortcuts -> Spotlight -> unselect all shortcuts
-  * Keyboard -> text -> uncheck correct spelling automatically and others
+  * Keyboard -> text -> uncheck correct spelling automatically and uncheck "Use smart quotes and dashes".
 * Show hidden files
   * Run `defaults write com.apple.finder AppleShowAllFiles YES`
   * Hold `Option` key, then right click on the Finder icon in the dock and click Relaunch.
 * Stop Mac from adding apps to dock:
   * System Preferences -> Dock & Menu Bar -> uncheck "Show recent applications in Dock"
 * Disable smart quotes when editing notes:
-  * System Preferences > Keyboard > Text, then unchecking "Use smart quotes and dashes".
   * Notes -> Edit -> Spelling and Grammar -> uncheck all options.
 * Install ZSH
 * [Disable Caps Lock Indicator](https://discussions.apple.com/thread/255159504)
