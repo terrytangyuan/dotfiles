@@ -9,16 +9,15 @@
 * Disable Spotlight shortcuts
   * Keyboard -> shortcuts -> Spotlight -> unselect all shortcuts
   * Keyboard -> text -> uncheck correct spelling automatically and uncheck "Use smart quotes and dashes".
+* Stop Mac from adding apps to dock:
+  * System Preferences -> Desktop and Dock -> uncheck "Show suggested and recent applications in Dock"
+* Disable smart quotes when editing notes:
+  * Notes -> Edit -> Spelling and Grammar -> uncheck all options.
+* Open Terminal App and install Zsh (this will prompt to install Git automatically and then run it again once Git is installed): `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
 * Show hidden files
   * Run `defaults write com.apple.finder AppleShowAllFiles YES`
   * Hold `Option` key, then right click on the Finder icon in the dock and click Relaunch.
-* Stop Mac from adding apps to dock:
-  * System Preferences -> Dock & Menu Bar -> uncheck "Show recent applications in Dock"
-* Disable smart quotes when editing notes:
-  * Notes -> Edit -> Spelling and Grammar -> uncheck all options.
-* Install ZSH
 * [Disable Caps Lock Indicator](https://discussions.apple.com/thread/255159504)
-* Install `git`
 * Generate new SSH key via `ssh-keygen -t ed25519 -C "terrytangyuan@gmail.com"; cat /Users/terrytangyuan/.ssh/id_ed25519.pub` and add it to GitHub [here](https://github.com/settings/keys).
 * Install `brew`
 * Clone this repo
