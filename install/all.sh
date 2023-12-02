@@ -16,7 +16,7 @@ fi
 brew update
 
 # Upgrade any already-installed formulae
-brew upgrade --all
+brew upgrade
 
 apps=(
     bash-completion2
@@ -60,24 +60,22 @@ brew install "${apps[@]}"
 brew cleanup
 
 apps=(
-    atom
     sublime-text
     pycharm-ce
     docker
-    docker-machine
     virtualbox
     intellij-idea
     iterm2
 )
 
-brew cask install "${apps[@]}"
+brew install --cask "${apps[@]}"
 
 # oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 # JVM
-brew cask install java
-brew install scala
+brew install --cask java
+brew install --cask scala
 
 # Install R and RStudio
 brew install xquartz r
@@ -88,7 +86,7 @@ brew install --appdir=/Applications rstudio
 bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
 
 # Tex
-brew cask install basictex
+brew install --cask basictex
 git clone https://github.com/TeXworks/texworks.git
 cd texworks; mkdir build; cd build; cmake ..; make; make install; cd ../..
 
