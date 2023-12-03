@@ -25,7 +25,6 @@
 * Copy zsh configurations to `~/.zshrc`
 * Add `subl` shortcut: `sudo ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl`
 * Install GoLand
-* Install Docker Desktop
 
 ### Deprecated
 
