@@ -60,8 +60,8 @@
 
     # Update Work (update config to work account)
     uw  = "!f() { \
-        git config user.email yuan.tang@antfin.com && \
-        git config user.name yuan.tang; \
+        git config user.email yutang@redhat.com && \
+        git config user.name terrytangyuan; \
     }; f"
 
     # Update Georgia Tech (update config to school account)
@@ -111,8 +111,9 @@
     #                     └─ hash (abbreviated)
 
 [user]
-	name = terrytangyuan
+	name = Yuan Tang
 	email = terrytangyuan@gmail.com
+	signingkey = /Users/yutang/.ssh/id_ed25519
 
 [credential]
 	helper = osxkeychain
@@ -121,3 +122,7 @@
     insteadOf = https://github.com/
     # This is for accessing private repos in go.mod locally
     # If running on GitHub Actions, use `git config --global url."https://${GITHUB_TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"`
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
