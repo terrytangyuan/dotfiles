@@ -32,6 +32,8 @@ alias kd='kubectl describe'
 
 alias kc='kubectx'
 alias kns='kubens'
+alias docker='podman'
+
 export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_331.jdk/Contents/Home"
