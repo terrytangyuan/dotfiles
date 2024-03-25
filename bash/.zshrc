@@ -32,7 +32,10 @@ alias kd='kubectl describe'
 
 alias kc='kubectx'
 alias kns='kubens'
-alias docker='podman'
+# Once installed podman and following the guides:
+# 1. https://podman-desktop.io/docs/migrating-from-docker/using-podman-mac-helper
+# 2. https://podman-desktop.io/docs/migrating-from-docker/emulating-docker-cli-with-podman
+alias docker='sudo bash /usr/local/bin/docker'
 
 export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
