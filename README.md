@@ -17,6 +17,7 @@
 * Show hidden files
   * Run `defaults write com.apple.finder AppleShowAllFiles YES`
   * Hold `Option` key, then right click on the Finder icon in the dock and click Relaunch.
+* System Preferences -> Desktop & Dock -> Desktop & Stage Manager -> Disable "Click wallpaper to reveal desktop"
 * [Disable Caps Lock Indicator](https://discussions.apple.com/thread/255159504)
 * Generate new SSH key via `ssh-keygen -t ed25519 -C "terrytangyuan@gmail.com"; cat /Users/terrytangyuan/.ssh/id_ed25519.pub` and add it to GitHub [here](https://github.com/settings/keys).
 * Install `brew`: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
