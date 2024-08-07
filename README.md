@@ -4,6 +4,8 @@
 
 ## Setup
 
+* Disable screenshot sound effect:
+  * System Preferences -> Sound -> turn off "play user interface sound effects"
 * Chinese input source:
   * Keyboard -> shortcuts -> input sources -> select the previous input source -> press Tab -> press Command + Space
 * Disable Spotlight shortcuts
