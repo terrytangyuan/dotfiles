@@ -28,6 +28,7 @@
 * Copy zsh configurations to `~/.zshrc`
 * Add `subl` shortcut: `sudo ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl`
 * Install GoLand
+* Block website: `sudo vi /etc/hosts` and add `127.0.0.1 www.chess.com` and `127.0.0.1 chess.com` entries and then clear DNS cache `sudo killall -HUP mDNSResponder`.
 
 ### Deprecated
 
