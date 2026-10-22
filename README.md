@@ -24,7 +24,7 @@
 * Generate new SSH key via `ssh-keygen -t ed25519 -C "terrytangyuan@gmail.com"; cat /Users/terrytangyuan/.ssh/id_ed25519.pub` and add it to GitHub [here](https://github.com/settings/keys).
 * Install `brew`: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 * Clone this repo: `mkdir ~/repos; cd ~/repos; git clone https://github.com/terrytangyuan/dotfiles.git; cd dotfiles`
-* Run `./setup_machine.sh`
+* Run `./setup_machine.sh` (or manually run the lines without installing all the deps)
 * Copy zsh configurations to `~/.zshrc`
 * Add `subl` shortcut: `sudo ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl`
 * Install GoLand
