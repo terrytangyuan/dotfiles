@@ -60,14 +60,8 @@
 
     # Update Work (update config to work account)
     uw  = "!f() { \
-        git config user.email yutang@redhat.com && \
+        git config user.email yuantang@tensorscale.io && \
         git config user.name terrytangyuan; \
-    }; f"
-
-    # Update Georgia Tech (update config to school account)
-    ugt  = "!f() { \
-        git config user.email ytang374@gatech.edu && \
-        git config user.name ytang374; \
     }; f"
 
     # Merge GitHub pull request on top of the `master` branch
@@ -111,18 +105,18 @@
     #                     └─ hash (abbreviated)
 
 [user]
-	name = Yuan Tang
-	email = terrytangyuan@gmail.com
-	signingkey = /Users/yutang/.ssh/id_ed25519
+    name = Yuan Tang
+    email = terrytangyuan@gmail.com
+    signingkey = /Users/terrytangyuan/.ssh/id_ed25519
 
 [credential]
-	helper = osxkeychain
+    helper = osxkeychain
 
 [url "ssh://git@github.com/"]
     insteadOf = https://github.com/
     # This is for accessing private repos in go.mod locally
     # If running on GitHub Actions, use `git config --global url."https://${GITHUB_TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"`
 [commit]
-	gpgsign = true
+    gpgsign = true
 [gpg]
-	format = ssh
+    format = ssh
